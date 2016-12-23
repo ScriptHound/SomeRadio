@@ -1,22 +1,18 @@
 package com.github.guwenk.smuradio;
 
-import org.xml.sax.SAXException;
-
 import java.io.IOException;
 import java.util.Scanner;
 
-import javax.xml.parsers.ParserConfigurationException;
-
-
-/**
- * Created by denis on 23.12.2016.
- */
 
 public class JavaRunControl {
-    public static void main(String args[]) throws IOException, ParserConfigurationException, SAXException {
-        boolean xmldl = false;
-        RControl control = new RControl("127.0.0.1:9000", "*pass*");
+    public static void main(String args[]) throws IOException {
         Scanner in = new Scanner(System.in);
+        boolean xmldl = false;
+        System.out.print("IP:PORT = ");
+        String ip_port = in.next();
+        System.out.print("PASS = ");
+        String pass = in.next();
+        RControl control = new RControl(ip_port, pass);
         String str = "%22D:\\Music\\Pet%20Shop%20Boys%20Discography\\Studio\\1987%20Actually\\B04%20Heart.flac%22";
         System.out.println("1. Next\n" +
                 "2. Prev\n" +
