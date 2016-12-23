@@ -34,7 +34,6 @@ public class VoteActivity extends AppCompatActivity {
             names.add(i + ". " + trackList.get(i).getArtist() + " - " + trackList.get(i).getTitle());
         }
         for (int i = 0; i < names.size(); i++) System.out.println(names.get(i));
-
         
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, names);
         listView.setAdapter(adapter);
