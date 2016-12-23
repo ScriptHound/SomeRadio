@@ -25,6 +25,9 @@ public class RControl {
         this.password = password;
     }
 
+    public List<Tracks> getTrackList() {
+        return trackList;
+    }
 
     private void request(String command) {
         try {
