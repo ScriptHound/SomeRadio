@@ -56,7 +56,7 @@ public class RControl {
     void vote(String file_path) throws IOException {
         request("action=songrequest&filename="+ file_path);
     }
-    void takeXml(){
+    void xmlDownload(){
         TextClass textClass;
         try {
             URLConnection connection = new URL("http://" + ip_port + "/?pass=" + password + "&action=getplaylist").openConnection();
@@ -74,13 +74,9 @@ public class RControl {
             trackList = textClass.parsing(sb.toString());
         } catch (SAXException e) {
             System.out.println("Wrong IP:PORT or PASS");
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (ConnectException e){
             System.out.println("Unable to connect to server");
-        } catch (IOException e) {
+        } catch (ParserConfigurationException | IOException e) {
             e.printStackTrace();
         }
     }

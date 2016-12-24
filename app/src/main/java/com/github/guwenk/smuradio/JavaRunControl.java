@@ -33,7 +33,7 @@ public class JavaRunControl {
                     control.vote(str);
                     break;
                 case 4:
-                    control.takeXml();
+                    control.xmlDownload();
                     xmldl = true;
                     System.out.println("Done");
                     break;
