@@ -2,4 +2,6 @@
     <string name="app_name">SMU Radio</string>
     <string name="order">Заказать!</string>
     <string name="track_order">Заказать музыку</string>
+    <string name="filter">Поиск</string>
+    <string name="apply">Искать</string>
 </resources>
