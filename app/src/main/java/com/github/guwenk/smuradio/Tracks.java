@@ -1,8 +1,5 @@
 package com.github.guwenk.smuradio;
 
-/**
- * Created by denis on 23.12.2016.
- */
 public class Tracks {
     private int num;
     private String artist;
