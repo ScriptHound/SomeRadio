@@ -5,8 +5,12 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -16,6 +20,8 @@ import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +30,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 
-
 public class VoteActivity extends AppCompatActivity {
 
     NodeList trackNodeList;
     ProgressDialog pDialog;
     List<Tracks> trackList = new ArrayList<>();
     ArrayList<String> names = new ArrayList<>();
+    String filename;
 
     String urlXML = "http://192.168.1.69:9001/?pass=yHZDVtGwCC&action=getplaylist";
 
@@ -38,16 +44,48 @@ public class VoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote);
-        ListView listView = (ListView) findViewById(R.id.listView);
 
-
+        final ListView listView = (ListView) findViewById(R.id.listView);
+        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         new DownloadXML().execute(urlXML);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, names);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, names);
         listView.setAdapter(adapter);
+
+        Button btnVote = (Button)findViewById(R.id.buttonVote);
+        btnVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    filename = trackList.get(listView.getCheckedItemPosition()).getFilename();
+                } catch (ArrayIndexOutOfBoundsException e){
+                    filename = "";
+                }
+
+                if (filename != "" && filename != null) {
+                    new VoteRequest().execute();
+                    Toast.makeText(getApplicationContext(), "Выполнено: " + trackList.get(listView.getCheckedItemPosition()).getTitle(), Toast.LENGTH_SHORT).show();
+                } else{
+                    Toast.makeText(getApplicationContext(), "Ничего не выбрано", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
     }
 
-
+    protected class VoteRequest extends AsyncTask<String, Void, Void>{
+        @Override
+        protected Void doInBackground(String... strings) {
+            try {
+                Log.d("FilePath", filename);
+                new URL("http://192.168.1.69:9001/?pass=yHZDVtGwCC&action=songrequest&filename=" + filename).openConnection().getInputStream();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
 
 
 
