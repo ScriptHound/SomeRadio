@@ -4,8 +4,8 @@ package com.github.guwenk.smuradio;
 import java.io.IOException;
 import java.net.URL;
 
-public class UrlRequest extends Thread{
-    String command = "";
+class UrlRequest extends Thread{
+    private String command = "";
     UrlRequest(String command){
         this.command = command;
     }

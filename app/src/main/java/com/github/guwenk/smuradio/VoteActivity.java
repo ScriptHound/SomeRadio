@@ -2,6 +2,7 @@ package com.github.guwenk.smuradio;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -23,6 +24,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -50,6 +52,8 @@ public class VoteActivity extends AppCompatActivity {
         new ParseXML().execute(); //для сети нужно добавить в execute параметр urlXML
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, names);
         listView.setAdapter(adapter);
+
+
 
         //<Поисковик>
         final EditText etFilter = (EditText)findViewById(R.id.filter);
@@ -93,18 +97,22 @@ public class VoteActivity extends AppCompatActivity {
                     choose = "";
                 }
 
-                if (filename != "" && filename != null) {
-                    new VoteRequest().execute();
-                    Toast.makeText(getApplicationContext(), "Выполнено: " + choose, Toast.LENGTH_SHORT).show();
-                    finish();
-                } else{
-                    Toast.makeText(getApplicationContext(), "Ничего не выбрано", Toast.LENGTH_SHORT).show();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    if (!Objects.equals(filename, "") && filename != null) {
+                        new VoteRequest().execute();
+                        Toast.makeText(getApplicationContext(), "Выполнено: " + choose, Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else{
+                        Toast.makeText(getApplicationContext(), "Ничего не выбрано", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
             }
         });
         //<Кнопка голосования/>
     }
+
+
 
     //<Запрос на добавление трека>
     protected class VoteRequest extends AsyncTask<String, Void, Void>{
@@ -119,7 +127,6 @@ public class VoteActivity extends AppCompatActivity {
             return null;
         }
     }
-
 
 
 
