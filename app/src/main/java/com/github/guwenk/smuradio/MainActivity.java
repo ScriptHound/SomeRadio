@@ -1,6 +1,5 @@
 package com.github.guwenk.smuradio;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
