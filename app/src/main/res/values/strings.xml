@@ -4,4 +4,8 @@
     <string name="track_order">Заказать музыку</string>
     <string name="filter">Поиск</string>
     <string name="apply">Искать</string>
+    <string name="play">Вкл. радио</string>
+    <string name="stop">Выкл. радио</string>
+    <string name="radio_on">Радио включено</string>
+    <string name="radio_off">Радио выключено</string>
 </resources>
