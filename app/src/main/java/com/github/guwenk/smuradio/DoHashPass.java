@@ -6,10 +6,6 @@ import android.support.annotation.RequiresApi;
 import java.util.Objects;
 import java.util.Scanner;
 
-/**
- * Created by denis on 25.12.2016.
- */
-
 public class DoHashPass {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void main(String args[]){
@@ -30,8 +26,6 @@ public class DoHashPass {
                 break;
             } else {
                 System.out.println("Passwords do not match.");
-                pass = null;
-                confirmpass = null;
             }
         }
     }
