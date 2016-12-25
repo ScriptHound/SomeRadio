@@ -18,10 +18,11 @@ import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
-    private String pass = "HackMe"; //Неплохо бы добавить хэширование пароля, например, SHA-1
+    private String pass = "8887f6929b1af320d05e4aaac0c79f24121f91c5058bac47bc53bdf4b3bd2c8f";
     MediaPlayer mediaPlayer;
     AudioManager am;
     boolean bRadioCreate = false;
+    String inputPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +59,14 @@ public class MainActivity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                inputPass = etPass.getText().toString();
+                try {
+                    inputPass = new SHA_256().hashing(inputPass);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    if (Objects.equals(etPass.getText().toString(), pass)){
+                    if (Objects.equals(inputPass, pass)){
                         new UrlRequest("next").start();
                     } else {
                         Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_SHORT).show();
@@ -73,8 +80,14 @@ public class MainActivity extends AppCompatActivity {
         btnPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                inputPass = etPass.getText().toString();
+                try {
+                    inputPass = new SHA_256().hashing(inputPass);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    if (Objects.equals(etPass.getText().toString(), pass)){
+                    if (Objects.equals(inputPass, pass)){
                         new UrlRequest("prev").start();
                     } else {
                         Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_SHORT).show();
