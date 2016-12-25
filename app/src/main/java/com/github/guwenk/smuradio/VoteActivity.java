@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,8 +20,13 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +58,10 @@ public class VoteActivity extends AppCompatActivity {
         new ParseXML().execute(); //для сети нужно добавить в execute параметр urlXML
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, names);
         listView.setAdapter(adapter);
+
+        FileWorker fw = new FileWorker();
+        fw.writeFile();
+        System.out.println(fw.readFile());
 
 
 
@@ -128,6 +138,41 @@ public class VoteActivity extends AppCompatActivity {
         }
     }
 
+
+    protected class FileWorker{
+        String FILENAME = "Base.xml";
+        String LOG_TAG = "FileWorker";
+        void writeFile(){
+            try {
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(openFileOutput(FILENAME, MODE_PRIVATE)));
+                DownloadXML dlXML = new DownloadXML();
+                dlXML.start();
+                bw.write(dlXML.getDownloadedXml());
+                bw.close();
+                Log.d(LOG_TAG, "Файл записан");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        String readFile(){
+            StringBuilder sb = new StringBuilder();
+            try{
+                BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(FILENAME)));
+                String str;
+                while ((str = br.readLine()) != null){
+                    sb.append(str);
+                    sb.append("\n");
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return sb.toString();
+        }
+    }
 
 
     //Парсинг XML из Assets
