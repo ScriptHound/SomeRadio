@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btnToTrackOrder = (Button)findViewById(R.id.btnToTrackOrder);
+        final Button btnToTrackOrder = (Button)findViewById(R.id.btnToTrackOrder);
         btnToTrackOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         final EditText etPass = (EditText)findViewById(R.id.etPass);
 
-        Button btnNext = (Button)findViewById(R.id.btnNext);
+        final Button btnNext = (Button)findViewById(R.id.btnNext);
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btnPrev = (Button)findViewById(R.id.btnPrev);
+        final Button btnPrev = (Button)findViewById(R.id.btnPrev);
         btnPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
